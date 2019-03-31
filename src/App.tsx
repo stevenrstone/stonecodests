@@ -1,28 +1,33 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import {
+  NavLink,
+  BrowserRouter as Router,
+  Route,
+  Switch
+} from "react-router-dom";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
+import Button from "./components/button/button";
+import Content from "./components/content/content";
+import "./App.css";
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.tsx</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+const App = () => (
+  <Router>
+    <div className="container">
+      <header className="header">Stone Code Productions</header>
+      <div className="content">
+        <section className="content-view">
+          <Content />
+        </section>
+        <section className="menu">
+          <nav>
+            <Button link="/about">About</Button>
+            <Button link="/work">Work</Button>
+            <Button link="/contact">Contact</Button>
+          </nav>
+        </section>
       </div>
-    );
-  }
-}
+    </div>
+  </Router>
+);
 
 export default App;
