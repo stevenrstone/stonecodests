@@ -8,6 +8,7 @@ import {
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import Button from "./components/button/button";
 import Content from "./components/content/content";
+
 import "./App.css";
 
 const App = () => (

@@ -1,7 +1,7 @@
 .copy-container {
   margin: 11% auto 0;
   max-width: 600px;
-  width: 75%;
+  width: 77%;
 }
 
 @media (orientation: landscape) {
@@ -11,7 +11,7 @@
 }
 
 .copy-box {
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.95);
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   box-sizing: border-box;

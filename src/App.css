@@ -18,12 +18,18 @@
 }
 
 .content {
-  background: gray;
   flex-direction: column;
   display: flex;
   height: calc(100% - 2rem);
   /* margin-top: 2rem; */
   z-index: 5;
+}
+
+.content-view {
+  background-image: url('./assets/steven-c3.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .content-view,
@@ -35,7 +41,7 @@
 
 .menu {
   align-items: center;
-  background-color: rgba(55,160,185,1);
+  background-color: #1fb6e0;
   display: flex;
   justify-content: center;
   z-index: 10;

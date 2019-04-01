@@ -1,5 +1,5 @@
 .transition-enter > *:first-child {
-  bottom: -2rem;
+  bottom: -10rem;
   display: block;
   position: relative;
   opacity: 0;
@@ -21,7 +21,7 @@
 
 .transition-exit-active > *:first-child {
   opacity: 0;
-  top: -2rem;
+  top: -10rem;
   transition: opacity 0.3s, top 0.3s;
 }
 
