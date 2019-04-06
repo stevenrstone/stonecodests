@@ -36,6 +36,8 @@
 .menu {
   box-sizing: border-box;
   flex-basis: 50%;
+  flex-grow: 0;
+  flex-shrink: 0;
   height: 100%;
 }
 
@@ -43,14 +45,39 @@
   align-items: center;
   background-color: #1fb6e0;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: flex-start;
   z-index: 10;
 }
 
+.copy {
+  display: inline-block;
+  margin: 2rem 0;
+}
 
+.title {
+  display: inline;
+  margin: 0;
+}
+
+.subtitle {
+  display: inline;
+}
+
+.nav {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  width: 100%;
+}
 
 @media (orientation: landscape) {
   .content {
     flex-direction: row;
+  }
+
+  .menu {
+    justify-content: center;
   }
 }

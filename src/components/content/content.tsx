@@ -1,11 +1,16 @@
 import React from "react";
-import { Switch, Route, withRouter } from "react-router-dom";
+import {
+  Switch,
+  Route,
+  RouteComponentProps,
+  withRouter
+} from "react-router-dom";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import CopyBox from "../copy-box/copy-box";
 
 import "./content.css";
 
-const Content = (props: any) => (
+const Content = (props: RouteComponentProps) => (
   <div>
     <TransitionGroup className="transition-group">
       <CSSTransition

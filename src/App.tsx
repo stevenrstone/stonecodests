@@ -20,7 +20,11 @@ const App = () => (
           <Content />
         </section>
         <section className="menu">
-          <nav>
+          <div className="copy">
+            <h1 className="title">Steven Stone | </h1>
+            <span className="subtitle">Web Developer</span>
+          </div>
+          <nav className="nav">
             <Button link="/about">About</Button>
             <Button link="/work">Work</Button>
             <Button link="/contact">Contact</Button>
