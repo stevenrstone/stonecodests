@@ -12,7 +12,7 @@ type ComponentProps = ButtonProps & RouteComponentProps;
 
 const Button = (props: ComponentProps) => (
   <NavLink
-    to={props.link !== props.location.pathname ? props.link : "/"}
+    to={props.link !== props.location.pathname ? props.link : "/home"}
     activeClassName="active"
     className="button"
   >

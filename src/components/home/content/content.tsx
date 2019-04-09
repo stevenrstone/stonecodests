@@ -21,13 +21,13 @@ const Content = (props: RouteComponentProps) => (
         <div className="route-container">
           <Switch location={props.location}>
             <Route
-              path="/about"
+              path="/home/about"
               component={() => {
                 return <CopyBox>About</CopyBox>;
               }}
             />
             <Route
-              path="/work"
+              path="/home/work"
               component={() => {
                 return <CopyBox>Work</CopyBox>;
               }}
