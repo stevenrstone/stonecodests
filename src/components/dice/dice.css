@@ -91,3 +91,9 @@
   height: 12vh;
   margin: 1vh 0;
 }
+
+.scroll-ref {
+  background: transparent;
+  /* display inline is one way to remove the bullet point */
+  display: inline;
+}

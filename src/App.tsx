@@ -13,7 +13,7 @@ import "./App.css";
 const App = () => (
   <Router>
     <div className="container">
-      <header className="header">Stone Code Productions</header>
+      <header className="header">Stone Coded</header>
       <div className="content">
         <Route
           path="/"

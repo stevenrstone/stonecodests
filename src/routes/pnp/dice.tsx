@@ -8,11 +8,16 @@ interface Options {
   dropLowest: boolean;
 }
 
+interface RollHistory {
+  dieType: number;
+  rolls: number[];
+}
+
 interface DiceState {
   buttons: number[];
   currentDieType: number;
   currentRolls: number[];
-  history: Array<number[]>;
+  history: RollHistory[];
   options: Options;
 }
 
@@ -42,7 +47,10 @@ const reducer = (state: DiceState, action: any) => {
         rolls = currentRolls;
       } else {
         if (currentRolls.length > 0) {
-          newHistory.push(currentRolls);
+          newHistory.push({
+            dieType: currentDieType,
+            rolls: currentRolls
+          });
         }
         newHistory = newHistory.slice(Math.max(newHistory.length - 5, 0));
         rolls = [];
@@ -67,20 +75,25 @@ const reducer = (state: DiceState, action: any) => {
 
 const Dice = () => {
   const [state, dispatch] = React.useReducer(reducer, defaultState);
+  let scrollRef = React.createRef<HTMLLIElement>();
+
   const effect = useEffect(() => {
-    console.log("effect");
+    const ref = scrollRef.current;
+    if (ref !== null) {
+      ref.scrollIntoView();
+    }
   });
 
   const renderRolls = (
     timeframe: string,
-    rolls: number[],
+    rollHistory: RollHistory,
     setIndex: number
   ) => {
-    const sum = rolls.reduce((acc, roll) => acc + roll, 0);
+    const sum = rollHistory.rolls.reduce((acc, roll) => acc + roll, 0);
     return (
       <React.Fragment key={setIndex}>
         <ul className={`sc-dice__${timeframe}__rolls`}>
-          {rolls.map((roll, index) => (
+          {rollHistory.rolls.map((roll, index) => (
             <li
               key={index}
               className={`sc-dice__${timeframe}__rolls__item`}
@@ -89,12 +102,18 @@ const Dice = () => {
               {roll}
             </li>
           ))}
+          {timeframe === "current" ? (
+            <li className="scroll-ref" ref={scrollRef} />
+          ) : null}
         </ul>
         <span className={`sc-dice__${timeframe}__total`}>
           {sum > 0 ? sum : null}
           <span className={`sc-dice__${timeframe}__number`}>
             {sum > 0
-              ? `${rolls.length} roll${rolls.length === 1 ? "" : "s"}`
+              ? `${rollHistory.rolls.length} d${rollHistory.dieType ||
+                  state.currentDieType}${
+                  rollHistory.rolls.length === 1 ? "" : "s"
+                }`
               : null}
           </span>
         </span>
@@ -132,7 +151,11 @@ const Dice = () => {
         <div className="sc-dice__display">
           <div className="sc-dice__history">{renderHistory()}</div>
           <div className="sc-dice__current">
-            {renderRolls("current", state.currentRolls, 7)}
+            {renderRolls(
+              "current",
+              { dieType: state.currentDieType, rolls: state.currentRolls },
+              7
+            )}
           </div>
         </div>
         <div className="sc-dice__options">
