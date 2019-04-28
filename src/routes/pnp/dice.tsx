@@ -9,7 +9,10 @@ interface Options {
 }
 
 interface RollHistory {
+  accumulate: boolean;
   dieType: number;
+  dropHighest: boolean;
+  dropLowest: boolean;
   rolls: number[];
 }
 
@@ -48,7 +51,10 @@ const reducer = (state: DiceState, action: any) => {
       } else {
         if (currentRolls.length > 0) {
           newHistory.push({
+            accumulate: options.accumulate,
             dieType: currentDieType,
+            dropHighest: options.dropHighest,
+            dropLowest: options.dropLowest,
             rolls: currentRolls
           });
         }
@@ -89,14 +95,45 @@ const Dice = () => {
     rollHistory: RollHistory,
     setIndex: number
   ) => {
-    const sum = rollHistory.rolls.reduce((acc, roll) => acc + roll, 0);
+    let lowest: number;
+    let highest: number;
+    let sum: number;
+
+    if (rollHistory.dropHighest || rollHistory.dropLowest) {
+      // Making a second copy so the original isn't sorted
+      let rollCopy = rollHistory.rolls.map(item => item);
+      rollCopy.sort((a, b) => a - b);
+      lowest = rollCopy[0];
+      if (rollHistory.dropLowest) {
+        rollCopy.splice(0, 1);
+      }
+      highest = rollCopy[rollCopy.length - 1];
+      if (rollHistory.dropHighest) {
+        rollCopy.splice(rollCopy.length - 1, 1);
+      }
+      sum = rollCopy.reduce((acc, roll) => acc + roll, 0);
+      console.log(rollCopy, sum);
+    } else {
+      sum = rollHistory.rolls.reduce((acc, roll) => acc + roll, 0);
+    }
+
     return (
       <React.Fragment key={setIndex}>
         <ul className={`sc-dice__${timeframe}__rolls`}>
           {rollHistory.rolls.map((roll, index) => (
             <li
               key={index}
-              className={`sc-dice__${timeframe}__rolls__item`}
+              className={`sc-dice__${timeframe}__rolls__item${
+                rollHistory.dropHighest &&
+                index === rollHistory.rolls.indexOf(highest)
+                  ? " highest"
+                  : ""
+              }${
+                rollHistory.dropLowest &&
+                index === rollHistory.rolls.indexOf(lowest)
+                  ? " lowest"
+                  : ""
+              }`}
               data-value={roll}
             >
               {roll}
@@ -110,10 +147,9 @@ const Dice = () => {
           {sum > 0 ? sum : null}
           <span className={`sc-dice__${timeframe}__number`}>
             {sum > 0
-              ? `${rollHistory.rolls.length} d${rollHistory.dieType ||
-                  state.currentDieType}${
-                  rollHistory.rolls.length === 1 ? "" : "s"
-                }`
+              ? `${rollHistory.rolls.length} d${
+                  rollHistory.accumulate ? "?" : rollHistory.dieType
+                }${rollHistory.rolls.length === 1 ? "" : "s"}`
               : null}
           </span>
         </span>
@@ -153,7 +189,13 @@ const Dice = () => {
           <div className="sc-dice__current">
             {renderRolls(
               "current",
-              { dieType: state.currentDieType, rolls: state.currentRolls },
+              {
+                accumulate: state.options.accumulate,
+                dieType: state.currentDieType,
+                dropHighest: state.options.dropHighest,
+                dropLowest: state.options.dropLowest,
+                rolls: state.currentRolls
+              },
               7
             )}
           </div>

@@ -21,7 +21,7 @@
 }
 
 .sc-dice__current {
-  color: navy;
+  color: blue;
   display: flex;
   white-space: nowrap;
 }
@@ -96,4 +96,10 @@
   background: transparent;
   /* display inline is one way to remove the bullet point */
   display: inline;
+}
+
+.lowest,
+.highest {
+  color: gray;
+  opacity: 0.6;
 }
