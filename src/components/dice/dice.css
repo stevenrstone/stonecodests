@@ -1,0 +1,93 @@
+.sc-dice-container {
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+  width: 100vw;
+}
+
+.sc-dice__display {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  height: 70%;
+  justify-content: flex-end;
+  overflow: hidden;
+  padding-top: 2.5rem;
+}
+
+.sc-dice__history {
+  height: 80%;
+  width: 100%;
+}
+
+.sc-dice__current {
+  color: navy;
+  display: flex;
+  white-space: nowrap;
+}
+
+.sc-dice__options {
+  align-items: flex-start;
+  border-top: 1px solid black;
+  bottom: 0;
+  display: flex;
+  flex-wrap: wrap;
+  height: 30%;
+  justify-content: space-around;
+  position: absolute;
+  width: 100%;
+  z-index: 10;
+}
+
+.sc-dice__current__rolls,
+.sc-dice__past__rolls {
+  align-items: center;
+  display: inline-flex;
+  margin: 1rem 0;
+  overflow-x: scroll;
+  padding: 0;
+  width: 70%;
+}
+
+.sc-dice__current__rolls__item,
+.sc-dice__past__rolls__item {
+  display: inline-block;
+  margin: 0 0.5rem;
+}
+
+.sc-dice__current__total,
+.sc-dice__past__total {
+  display: inline-block;
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 1rem 0;
+  position: relative;
+  text-align: center;
+  width: 30%;
+}
+
+.sc-dice__current__number,
+.sc-dice__past__number {
+  bottom: -0.5rem;
+  font-size: 0.8rem;
+  left: 50%;
+  position: absolute;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  width: 100%;
+}
+
+.sc-dice__past__rolls {
+  height: 20%;
+  margin: 0;
+}
+
+.sc-dice__past__total {
+  font-size: 1.5rem;
+}
+
+.sc-dice-button {
+  flex-basis: 21%;
+  height: 12vh;
+  margin: 1vh 0;
+}

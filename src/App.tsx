@@ -6,6 +6,7 @@ import {
   Route
 } from "react-router-dom";
 import Home from "./routes/home";
+import Dice from "./routes/pnp/dice";
 
 import "./App.css";
 
@@ -21,6 +22,13 @@ const App = () => (
           component={() => <Redirect to="/home" />}
         />
         <Route path="/home" component={Home} />
+        <Route path="/pnp/dice" exact={true} component={Dice} />
+        <Route
+          path="/dice"
+          redirect="/pnp/dice"
+          exact={true}
+          component={() => <Redirect to="/pnp/dice" />}
+        />
       </div>
     </div>
   </Router>

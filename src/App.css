@@ -21,7 +21,6 @@
   flex-direction: column;
   display: flex;
   height: calc(100% - 2rem);
-  /* margin-top: 2rem; */
   z-index: 5;
 }
 
