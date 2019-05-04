@@ -2,26 +2,36 @@ import React, { useEffect, useReducer } from "react";
 
 import "../../components/dice/dice.css";
 
+interface Option {
+  active: boolean;
+  displayName: string;
+}
+
 interface Options {
-  accumulate: boolean;
-  dropHighest: boolean;
-  dropLowest: boolean;
+  accumulate: Option;
+  dropHighest: Option;
+  dropLowest: Option;
+}
+
+interface Roll {
+  value: number;
+  dieType: number;
 }
 
 interface RollHistory {
   accumulate: boolean;
-  dieType: number;
   dropHighest: boolean;
   dropLowest: boolean;
-  rolls: number[];
+  rolls: Roll[];
 }
 
 interface DiceState {
   buttons: number[];
   currentDieType: number;
-  currentRolls: number[];
+  currentRolls: Roll[];
   history: RollHistory[];
   options: Options;
+  optionsView: boolean;
 }
 
 const defaultState: DiceState = {
@@ -30,31 +40,30 @@ const defaultState: DiceState = {
   currentRolls: [],
   history: [],
   options: {
-    accumulate: false,
-    dropHighest: false,
-    dropLowest: false
-  }
+    accumulate: { active: false, displayName: "Accumulate Rolls" },
+    dropHighest: { active: false, displayName: "Drop Highest Roll" },
+    dropLowest: { active: false, displayName: "Drop Lowest Roll" }
+  },
+  optionsView: false
 };
 
 const reducer = (state: DiceState, action: any) => {
-  console.log(state, action);
   switch (action.type) {
     case "roll":
       const { clickedDieType } = action;
       const { currentDieType, currentRolls, history, options } = state;
 
-      let roll: number;
-      let rolls: number[];
+      let roll: Roll;
+      let rolls: Roll[];
       let newHistory = history;
-      if (clickedDieType === currentDieType || options.accumulate) {
+      if (clickedDieType === currentDieType || options.accumulate.active) {
         rolls = currentRolls;
       } else {
         if (currentRolls.length > 0) {
           newHistory.push({
-            accumulate: options.accumulate,
-            dieType: currentDieType,
-            dropHighest: options.dropHighest,
-            dropLowest: options.dropLowest,
+            accumulate: options.accumulate.active,
+            dropHighest: options.dropHighest.active,
+            dropLowest: options.dropLowest.active,
             rolls: currentRolls
           });
         }
@@ -62,7 +71,10 @@ const reducer = (state: DiceState, action: any) => {
         rolls = [];
       }
 
-      roll = Math.floor(Math.random() * clickedDieType) + 1;
+      roll = {
+        dieType: clickedDieType,
+        value: Math.floor(Math.random() * clickedDieType) + 1
+      };
 
       rolls.push(roll);
 
@@ -71,6 +83,13 @@ const reducer = (state: DiceState, action: any) => {
         currentDieType: clickedDieType,
         currentRolls: rolls,
         history: newHistory
+      };
+      break;
+    case "option-change":
+      const { newOptions } = action;
+      return {
+        ...state,
+        options: newOptions
       };
       break;
     default:
@@ -83,7 +102,7 @@ const Dice = () => {
   const [state, dispatch] = React.useReducer(reducer, defaultState);
   let scrollRef = React.createRef<HTMLLIElement>();
 
-  const effect = useEffect(() => {
+  const keepNewRollsVisible = useEffect(() => {
     const ref = scrollRef.current;
     if (ref !== null) {
       ref.scrollIntoView();
@@ -95,14 +114,14 @@ const Dice = () => {
     rollHistory: RollHistory,
     setIndex: number
   ) => {
-    let lowest: number;
-    let highest: number;
+    let lowest: Roll;
+    let highest: Roll;
     let sum: number;
 
     if (rollHistory.dropHighest || rollHistory.dropLowest) {
       // Making a second copy so the original isn't sorted
       let rollCopy = rollHistory.rolls.map(item => item);
-      rollCopy.sort((a, b) => a - b);
+      rollCopy.sort((a, b) => a.value - b.value);
       lowest = rollCopy[0];
       if (rollHistory.dropLowest) {
         rollCopy.splice(0, 1);
@@ -111,10 +130,9 @@ const Dice = () => {
       if (rollHistory.dropHighest) {
         rollCopy.splice(rollCopy.length - 1, 1);
       }
-      sum = rollCopy.reduce((acc, roll) => acc + roll, 0);
-      console.log(rollCopy, sum);
+      sum = rollCopy.reduce((acc, roll) => acc + roll.value, 0);
     } else {
-      sum = rollHistory.rolls.reduce((acc, roll) => acc + roll, 0);
+      sum = rollHistory.rolls.reduce((acc, roll) => acc + roll.value, 0);
     }
 
     return (
@@ -134,9 +152,9 @@ const Dice = () => {
                   ? " lowest"
                   : ""
               }`}
-              data-value={roll}
+              data-value={roll.value}
             >
-              {roll}
+              {roll.value}
             </li>
           ))}
           {timeframe === "current" ? (
@@ -148,7 +166,12 @@ const Dice = () => {
           <span className={`sc-dice__${timeframe}__number`}>
             {sum > 0
               ? `${rollHistory.rolls.length} d${
-                  rollHistory.accumulate ? "?" : rollHistory.dieType
+                  rollHistory.accumulate ||
+                  rollHistory.rolls.some(
+                    rh => rh.dieType !== rollHistory.rolls[0].dieType
+                  )
+                    ? "?"
+                    : rollHistory.rolls[0].dieType
                 }${rollHistory.rolls.length === 1 ? "" : "s"}`
               : null}
           </span>
@@ -181,6 +204,38 @@ const Dice = () => {
     ));
   };
 
+  const handleOptionChange = (name: string) => {
+    const option = Object.entries<Option>(state.options).find(
+      (o: [string, Option]) => o[1].displayName === name
+    );
+    if (option !== undefined) {
+      const newValue = !option[1].active;
+      dispatch({
+        type: "option-change",
+        newOptions: {
+          ...state.options,
+          [option[0]]: {
+            active: newValue,
+            displayName: option[1].displayName
+          }
+        }
+      });
+    }
+  };
+
+  const renderOptions = () => {
+    return Object.values<Option>(state.options).map((value: Option) => (
+      <label key={value.displayName} className="sc-dice-option">
+        <input
+          type="checkbox"
+          defaultChecked={value.active}
+          onChange={() => handleOptionChange(value.displayName)}
+        />
+        {value.displayName}
+      </label>
+    ));
+  };
+
   return (
     <>
       <div className="sc-dice-container">
@@ -190,10 +245,9 @@ const Dice = () => {
             {renderRolls(
               "current",
               {
-                accumulate: state.options.accumulate,
-                dieType: state.currentDieType,
-                dropHighest: state.options.dropHighest,
-                dropLowest: state.options.dropLowest,
+                accumulate: state.options.accumulate.active,
+                dropHighest: state.options.dropHighest.active,
+                dropLowest: state.options.dropLowest.active,
                 rolls: state.currentRolls
               },
               7
@@ -201,8 +255,7 @@ const Dice = () => {
           </div>
         </div>
         <div className="sc-dice__options">
-          {renderButtons()}
-          <div className="sc-dice-more-options" />
+          {state.optionsView ? renderOptions() : renderButtons()}
         </div>
       </div>
     </>
