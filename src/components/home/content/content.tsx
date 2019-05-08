@@ -27,6 +27,24 @@ const Content = (props: RouteComponentProps) => (
               }}
             />
             <Route
+              path="/home/professional-work"
+              component={() => {
+                return <CopyBox>Work</CopyBox>;
+              }}
+            />
+            <Route
+              path="/home/work"
+              component={() => {
+                return <CopyBox>Work</CopyBox>;
+              }}
+            />
+            <Route
+              path="/home/personal-work"
+              component={() => {
+                return <CopyBox>Personal Work</CopyBox>;
+              }}
+            />
+            <Route
               path="/home/work"
               component={() => {
                 return <CopyBox>Work</CopyBox>;
