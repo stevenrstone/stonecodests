@@ -92,6 +92,17 @@ const reducer = (state: DiceState, action: any) => {
         options: newOptions
       };
       break;
+    case "show-options":
+      return {
+        ...state,
+        optionsView: true
+      };
+      break;
+    case "hide-options":
+      return {
+        ...state,
+        optionsView: false
+      };
     default:
       return state;
       break;
@@ -236,10 +247,35 @@ const Dice = () => {
     ));
   };
 
+  const showOptions = () => {
+    dispatch({
+      type: "show-options"
+    });
+  };
+
+  const hideOptions = () => {
+    if (state.optionsView) {
+      dispatch({
+        type: "hide-options"
+      });
+    }
+  };
+
   return (
     <>
       <div className="sc-dice-container">
-        <div className="sc-dice__display">
+        {state.optionsView && (
+          <div className="sc-dice__options-flyout">
+            <span className="sc-dice__options-callout" onClick={hideOptions}>
+              &#11013; Close Options
+            </span>
+            {renderOptions()}
+          </div>
+        )}
+        <div className="sc-dice__display" onClick={hideOptions}>
+          <span className="sc-dice__options-callout" onClick={showOptions}>
+            Options &#10132;
+          </span>
           <div className="sc-dice__history">{renderHistory()}</div>
           <div className="sc-dice__current">
             {renderRolls(
@@ -254,8 +290,8 @@ const Dice = () => {
             )}
           </div>
         </div>
-        <div className="sc-dice__options">
-          {state.optionsView ? renderOptions() : renderButtons()}
+        <div className="sc-dice__options" onClick={hideOptions}>
+          {renderButtons()}
         </div>
       </div>
     </>

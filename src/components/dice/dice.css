@@ -14,6 +14,26 @@
   overflow: hidden;
 }
 
+.sc-dice__options-callout {
+  padding-left: 1rem;
+}
+
+.sc-dice__options-flyout {
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.4) 5px 5px 15px;
+  left: 0;
+  height: calc(100vh - 2rem);
+  position: absolute;
+  top: 0;
+  width: 75vw;
+  z-index: 20;
+}
+
+.sc-dice__options-callout:hover,
+.sc-dice__options-callout:active {
+  text-decoration: underline;
+}
+
 .sc-dice__history {
   min-height: 80%;
   width: 100%;
@@ -22,6 +42,7 @@
 .sc-dice__current {
   color: blue;
   display: flex;
+  min-height: 4.5rem;
   white-space: nowrap;
 }
 
