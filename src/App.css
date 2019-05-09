@@ -29,12 +29,12 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  flex-basis: 60%;
 }
 
 .content-view,
 .menu {
   box-sizing: border-box;
-  flex-basis: 50%;
   flex-grow: 0;
   flex-shrink: 0;
   height: 100%;
@@ -44,6 +44,7 @@
   align-items: center;
   background-color: #1fb6e0;
   display: flex;
+  flex-basis: 40%;
   flex-direction: column;
   justify-content: flex-start;
   z-index: 10;
@@ -55,8 +56,8 @@
 }
 
 .title {
-  display: inline;
-  margin: 0;
+  display: inline-block;
+  margin: 2rem 0.5rem 0 0;
 }
 
 .subtitle {
@@ -78,6 +79,11 @@
 
   .menu {
     justify-content: center;
+  }
+
+  .title {
+    display: inline;
+    margin: 0;
   }
 
   .copy {

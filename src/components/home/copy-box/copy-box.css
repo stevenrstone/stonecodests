@@ -4,29 +4,38 @@
   width: 77%;
 }
 
-@media (orientation: landscape) {
-  .copy-container {
-    margin-top: 20%;
-  }
-}
-
 .copy-box {
   background-color: rgba(255, 255, 255, 0.95);
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   box-sizing: border-box;
   height: 100%;
+  overflow-y: auto;
   padding: 1rem;
   position: relative;
   width: 100%;
 }
 
 .copy-box::after {
-  background: inherit;
+  background-color: transparent;
   content: "";
   height: 100vw;
   left: 0;
   position: absolute;
   top: 100%;
   width: 100%;
+}
+
+@media (orientation: landscape) {
+  .copy-container {
+    margin-top: 20%;
+  }
+
+  .copy-box {
+    overflow-y: initial;
+  }
+
+  .copy-box::after {
+    background-color: inherit;
+  }
 }

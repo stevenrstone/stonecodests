@@ -17,8 +17,8 @@ const Home = () => (
       </div>
       <nav className="nav">
         <Button link="/home/about">About</Button>
-        <Button link="/home/work">Work</Button>
-        <Button link="/home/contact">Contact</Button>
+        <Button link="/home/professional-work">Career</Button>
+        <Button link="/home/personal-work">Personal Work</Button>
       </nav>
     </section>
   </>
