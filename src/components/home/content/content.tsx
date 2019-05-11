@@ -27,11 +27,13 @@ const Content = (props: RouteComponentProps) => (
                 return (
                   <CopyBox>
                     <p>
-                      After being born and raised in St. Louis, I spent my
-                      college years learning how to program in southern Indiana
-                      with a semester-long excursion to the UK in the middle. I
-                      landed in the Kansas City area shortly after graduating in
-                      the summer of 2013.
+                      Born and raised in St. Louis, Missouri, I attended the
+                      University of Evansville in Southern Indiana to learn
+                      programming including a semester spent abroad in the
+                      United Kingdom, graduating with a Bachelor of Science in
+                      Computer Science and a minor in Mathematics. I landed in
+                      the Kansas City area shortly after graduating in the
+                      summer of 2013.
                     </p>
                     <p>
                       Outside work, most of my attention goes towards watching
@@ -81,13 +83,14 @@ const Content = (props: RouteComponentProps) => (
                 return (
                   <CopyBox>
                     <p>
-                      Admittedly, I don't do a lot of coding away from the
-                      workplace. Every now and then I'll spend some time
-                      learning a new piece of tech, like rendering static files
-                      from a React app, or React's recent Hooks feature, and the
-                      content is usually drawn from my hobbies. Recently I've
-                      conceptualized a toolkit for Dungeons &amp; Dragons - I
-                      like to call it Papers &amp; Pencils.
+                      When I find a new programming technique I find
+                      interesting, I do challenge myself to learn it, whether on
+                      the job or at home. Some examples are rendering static
+                      files from a React app, or React's recent Hooks feature. I
+                      enjoy integrating my own interests as the content when
+                      learning new technology. Recently I've conceptualized a
+                      toolkit for Dungeons &amp; Dragons – I like to call it
+                      Papers &amp; Pencils.
                     </p>
                     <p>
                       The first piece of P&amp;P is a mobile-friendly dice
@@ -97,8 +100,8 @@ const Content = (props: RouteComponentProps) => (
                       </Link>
                       . While there are plenty of dice rolling apps online, most
                       of them are full of text input fields that just feel
-                      cumbersome on a touch screen. This project is about 80%
-                      done at this point; the last major step is adding offline
+                      cumbersome on a touch screen. This project is currently
+                      about 80% complete; the last major step is adding offline
                       functionality by converting it to a Progressive Web App.
                       Code-wise, this app is a React stateless component (with
                       TypeScript) using Hooks. Though a little complex, it's
@@ -110,8 +113,8 @@ const Content = (props: RouteComponentProps) => (
                       generator.
                     </p>
                     <p>
-                      The code for the dice roller, and now-outdated work on the
-                      notebook, can be found{" "}
+                      The code for the dice roller, this site, and now-outdated
+                      work on the notebook (with Preact), can be found{" "}
                       <a href="https://github.com/stevenrstone" target="_blank">
                         on my github
                       </a>
