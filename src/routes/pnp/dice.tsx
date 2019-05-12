@@ -291,7 +291,7 @@ const Dice = () => {
             )}
           </div>
         </div>
-        <div className="sc-dice__options" onClick={hideOptions}>
+        <div className="sc-dice__buttons" onClick={hideOptions}>
           {renderButtons()}
         </div>
       </div>
