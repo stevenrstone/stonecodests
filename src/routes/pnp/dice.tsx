@@ -110,10 +110,11 @@ const reducer = (state: DiceState, action: any) => {
 };
 
 const Dice = () => {
-  const [state, dispatch] = React.useReducer(reducer, defaultState);
+  const [state, dispatch] = useReducer(reducer, defaultState);
   let scrollRef = React.createRef<HTMLLIElement>();
 
-  const keepNewRollsVisible = useEffect(() => {
+  // Keep the current rolls div scrolled to the right for new rolls
+  useEffect(() => {
     const ref = scrollRef.current;
     if (ref !== null) {
       ref.scrollIntoView();
@@ -147,7 +148,7 @@ const Dice = () => {
     }
 
     return (
-      <React.Fragment key={setIndex}>
+      <div key={setIndex}  className="sc-dice__history-row">
         <ul className={`sc-dice__${timeframe}__rolls`}>
           {rollHistory.rolls.map((roll, index) => (
             <li
@@ -187,7 +188,7 @@ const Dice = () => {
               : null}
           </span>
         </span>
-      </React.Fragment>
+      </div>
     );
   };
 

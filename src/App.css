@@ -7,14 +7,12 @@
 
 .header {
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
-  /* left: 0; */
   letter-spacing: 1.2rem;
   line-height: 2rem;
-  /* position: fixed; */
-  /* right: 0; */
   text-align: center;
   top: 0;
   width: 100%;
+  z-index: 50;
 }
 
 .content {

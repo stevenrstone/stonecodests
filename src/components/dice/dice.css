@@ -35,7 +35,15 @@
 }
 
 .sc-dice__history {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
   min-height: 80%;
+  width: 100%;
+}
+
+.sc-dice__history-row {
+  height: 20%;
   width: 100%;
 }
 
@@ -99,7 +107,7 @@
 }
 
 .sc-dice__past__rolls {
-  height: 20%;
+  height: 100%;
   margin: 0;
 }
 
