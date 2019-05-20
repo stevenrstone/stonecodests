@@ -47,7 +47,6 @@
     "react": "^16.8.6",
     "react-app-polyfill": "^0.2.2",
     "react-dev-utils": "^8.0.0",
-    "react-div-100vh": "^0.3.4",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.0",
     "react-transition-group": "^2.7.1",
