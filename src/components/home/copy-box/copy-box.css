@@ -10,10 +10,12 @@
   border-top-right-radius: 5px;
   box-sizing: border-box;
   height: 100%;
-  overflow-y: auto;
+  overflow-y: scroll;
   padding: 1rem;
   position: relative;
   width: 100%;
+  /* enable momentum scrolling on iOS */
+  -webkit-overflow-scrolling: touch;
 }
 
 .copy-box::after {

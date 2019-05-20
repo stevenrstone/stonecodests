@@ -35,7 +35,15 @@
 }
 
 .sc-dice__history {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
   min-height: 80%;
+  width: 100%;
+}
+
+.sc-dice__history-row {
+  height: 20%;
   width: 100%;
 }
 
@@ -44,20 +52,6 @@
   display: flex;
   min-height: 4.5rem;
   white-space: nowrap;
-}
-
-.sc-dice__options {
-  align-items: flex-start;
-  border-top: 1px solid black;
-  bottom: 0;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  height: 30%;
-  justify-content: space-around;
-  position: absolute;
-  width: 100%;
-  z-index: 10;
 }
 
 .sc-dice__current__rolls,
@@ -99,7 +93,7 @@
 }
 
 .sc-dice__past__rolls {
-  height: 20%;
+  height: 100%;
   margin: 0;
 }
 
@@ -107,10 +101,28 @@
   font-size: 1.5rem;
 }
 
+.sc-dice__buttons {
+  /* align-items: flex-start; */
+  border-top: 1px solid black;
+  bottom: 0;
+  /* display: flex; */
+  /* flex-direction: row; */
+  /* flex-wrap: wrap; */
+  height: 30%;
+  /* justify-content: space-around; */
+  position: absolute;
+  text-align: center;
+  width: 100%;
+  z-index: 10;
+}
+
 .sc-dice-button {
-  flex-basis: 21%;
-  height: 12vh;
-  margin: 1vh 0;
+  /* flex-basis: 21%; */
+  display: block;
+  float: left;
+  height: 40%;
+  margin: 1vh 1%;
+  width: 22%;
 }
 
 .sc-dice-option {
