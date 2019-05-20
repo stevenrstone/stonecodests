@@ -13,8 +13,14 @@
   transition: color 0.3s, background 0.3s;
 }
 
-.button:hover,
 .button.active {
   background-color: white;
   color: #1fb6e0;
+}
+
+@media (orientation: landscape) {
+  .button:hover {
+    background-color: white;
+    color: #1fb6e0;
+  }
 }
