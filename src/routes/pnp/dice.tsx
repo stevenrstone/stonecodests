@@ -42,9 +42,9 @@ const defaultState: DiceState = {
   options: {
     accumulate: { active: false, displayName: "Accumulate Rolls" },
     dropHighest: { active: false, displayName: "Drop Highest Roll" },
-    dropLowest: { active: false, displayName: "Drop Lowest Roll" }
+    dropLowest: { active: false, displayName: "Drop Lowest Roll" },
   },
-  optionsView: false
+  optionsView: false,
 };
 
 const reducer = (state: DiceState, action: any) => {
@@ -64,7 +64,7 @@ const reducer = (state: DiceState, action: any) => {
             accumulate: options.accumulate.active,
             dropHighest: options.dropHighest.active,
             dropLowest: options.dropLowest.active,
-            rolls: currentRolls
+            rolls: currentRolls,
           });
         }
         newHistory = newHistory.slice(Math.max(newHistory.length - 5, 0));
@@ -73,7 +73,7 @@ const reducer = (state: DiceState, action: any) => {
 
       roll = {
         dieType: clickedDieType,
-        value: Math.floor(Math.random() * clickedDieType) + 1
+        value: Math.floor(Math.random() * clickedDieType) + 1,
       };
 
       rolls.push(roll);
@@ -82,7 +82,7 @@ const reducer = (state: DiceState, action: any) => {
         ...state,
         currentDieType: clickedDieType,
         currentRolls: rolls,
-        history: newHistory
+        history: newHistory,
       };
       break;
     }
@@ -90,21 +90,21 @@ const reducer = (state: DiceState, action: any) => {
       const { newOptions } = action;
       return {
         ...state,
-        options: newOptions
+        options: newOptions,
       };
       break;
     }
     case "show-options": {
       return {
         ...state,
-        optionsView: true
+        optionsView: true,
       };
       break;
     }
     case "hide-options": {
       return {
         ...state,
-        optionsView: false
+        optionsView: false,
       };
     }
     case "clear": {
@@ -115,7 +115,7 @@ const reducer = (state: DiceState, action: any) => {
           accumulate: options.accumulate.active,
           dropHighest: options.dropHighest.active,
           dropLowest: options.dropLowest.active,
-          rolls: currentRolls
+          rolls: currentRolls,
         });
       }
       newHistory = newHistory.slice(Math.max(newHistory.length - 5, 0));
@@ -123,11 +123,12 @@ const reducer = (state: DiceState, action: any) => {
       return {
         ...state,
         currentRolls: [],
-        history: newHistory
+        history: newHistory,
       };
       break;
     }
     default:
+      console.error("Incorrect dispatch");
       return state;
       break;
   }
@@ -148,7 +149,7 @@ const Dice = () => {
   const renderRolls = (
     timeframe: string,
     rollHistory: RollHistory,
-    setIndex: number
+    setIndex: number,
   ) => {
     let lowest: Roll;
     let highest: Roll;
@@ -204,7 +205,7 @@ const Dice = () => {
               ? `${rollHistory.rolls.length} d${
                   rollHistory.accumulate ||
                   rollHistory.rolls.some(
-                    rh => rh.dieType !== rollHistory.rolls[0].dieType
+                    rh => rh.dieType !== rollHistory.rolls[0].dieType,
                   )
                     ? "?"
                     : rollHistory.rolls[0].dieType
@@ -218,7 +219,7 @@ const Dice = () => {
 
   const renderHistory = () => {
     return state.history.map((historySet, index) =>
-      renderRolls("past", historySet, index)
+      renderRolls("past", historySet, index),
     );
   };
 
@@ -231,7 +232,7 @@ const Dice = () => {
           e.preventDefault();
           dispatch({
             type: "roll",
-            clickedDieType: button
+            clickedDieType: button,
           });
         }}
       >
@@ -242,7 +243,7 @@ const Dice = () => {
 
   const handleOptionChange = (name: string) => {
     const option = Object.entries<Option>(state.options).find(
-      (o: [string, Option]) => o[1].displayName === name
+      (o: [string, Option]) => o[1].displayName === name,
     );
     if (option !== undefined) {
       const newValue = !option[1].active;
@@ -252,9 +253,9 @@ const Dice = () => {
           ...state.options,
           [option[0]]: {
             active: newValue,
-            displayName: option[1].displayName
-          }
-        }
+            displayName: option[1].displayName,
+          },
+        },
       });
     }
   };
@@ -277,14 +278,14 @@ const Dice = () => {
 
   const showOptions = () => {
     dispatch({
-      type: "show-options"
+      type: "show-options",
     });
   };
 
   const hideOptions = () => {
     if (state.optionsView) {
       dispatch({
-        type: "hide-options"
+        type: "hide-options",
       });
     }
   };
@@ -298,6 +299,44 @@ const Dice = () => {
               &#11013; Close Options
             </span>
             {renderOptions()}
+            <button
+              className="sc-dice-button"
+              type="button"
+              onClick={() => {
+                dispatch({
+                  type: "option-change",
+                  newOptions: {
+                    ...defaultState.options,
+                    dropLowest: {
+                      active: true,
+                      displayName: "Drop Lowest Roll",
+                    },
+                  },
+                });
+                dispatch({
+                  type: "clear",
+                });
+
+                for (let i = 0; i < 6; i += 1) {
+                  for (let j = 0; j < 4; j += 1) {
+                    dispatch({
+                      type: "roll",
+                      clickedDieType: 6,
+                    });
+                  }
+                  if (i < 5) {
+                    dispatch({
+                      type: "clear",
+                    });
+                  }
+                }
+                dispatch({
+                  type: "hide-options",
+                });
+              }}
+            >
+              Roll Stats
+            </button>
           </div>
         )}
         <div className="sc-dice__display" onClick={hideOptions}>
@@ -312,9 +351,9 @@ const Dice = () => {
                 accumulate: state.options.accumulate.active,
                 dropHighest: state.options.dropHighest.active,
                 dropLowest: state.options.dropLowest.active,
-                rolls: state.currentRolls
+                rolls: state.currentRolls,
               },
-              7
+              7,
             )}
           </div>
         </div>
@@ -325,7 +364,7 @@ const Dice = () => {
             onClick={e => {
               e.preventDefault();
               dispatch({
-                type: "clear"
+                type: "clear",
               });
             }}
           >
