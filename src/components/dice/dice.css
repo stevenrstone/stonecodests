@@ -20,9 +20,10 @@
 
 .sc-dice__options-flyout {
   background-color: white;
+  bottom: 0;
   box-shadow: rgba(0, 0, 0, 0.4) 5px 5px 15px;
   left: 0;
-  height: calc(100vh - 2rem);
+  /* height: calc(100vh - 2rem); */
   position: absolute;
   top: 0;
   width: 75vw;
@@ -62,6 +63,8 @@
   overflow-x: scroll;
   padding: 0;
   width: 70%;
+  /* enable momentum scrolling on iOS */
+  -webkit-overflow-scrolling: touch;
 }
 
 .sc-dice__current__rolls__item,

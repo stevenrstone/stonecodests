@@ -49,7 +49,7 @@ const defaultState: DiceState = {
 
 const reducer = (state: DiceState, action: any) => {
   switch (action.type) {
-    case "roll":
+    case "roll": {
       const { clickedDieType } = action;
       const { currentDieType, currentRolls, history, options } = state;
 
@@ -85,24 +85,48 @@ const reducer = (state: DiceState, action: any) => {
         history: newHistory
       };
       break;
-    case "option-change":
+    }
+    case "option-change": {
       const { newOptions } = action;
       return {
         ...state,
         options: newOptions
       };
       break;
-    case "show-options":
+    }
+    case "show-options": {
       return {
         ...state,
         optionsView: true
       };
       break;
-    case "hide-options":
+    }
+    case "hide-options": {
       return {
         ...state,
         optionsView: false
       };
+    }
+    case "clear": {
+      const { currentRolls, history, options } = state;
+      let newHistory = history;
+      if (currentRolls.length > 0) {
+        newHistory.push({
+          accumulate: options.accumulate.active,
+          dropHighest: options.dropHighest.active,
+          dropLowest: options.dropLowest.active,
+          rolls: currentRolls
+        });
+      }
+      newHistory = newHistory.slice(Math.max(newHistory.length - 5, 0));
+
+      return {
+        ...state,
+        currentRolls: [],
+        history: newHistory
+      };
+      break;
+    }
     default:
       return state;
       break;
@@ -116,8 +140,8 @@ const Dice = () => {
   // Keep the current rolls div scrolled to the right for new rolls
   useEffect(() => {
     const ref = scrollRef.current;
-    if (ref !== null) {
-      ref.scrollIntoView();
+    if (ref !== null && ref.parentElement !== null) {
+      ref.parentElement.scrollTo(ref.getBoundingClientRect().right, 0);
     }
   });
 
@@ -148,7 +172,7 @@ const Dice = () => {
     }
 
     return (
-      <div key={setIndex}  className="sc-dice__history-row">
+      <div key={setIndex} className="sc-dice__history-row">
         <ul className={`sc-dice__${timeframe}__rolls`}>
           {rollHistory.rolls.map((roll, index) => (
             <li
@@ -236,16 +260,19 @@ const Dice = () => {
   };
 
   const renderOptions = () => {
-    return Object.values<Option>(state.options).map((value: Option) => (
-      <label key={value.displayName} className="sc-dice-option">
-        <input
-          type="checkbox"
-          defaultChecked={value.active}
-          onChange={() => handleOptionChange(value.displayName)}
-        />
-        {value.displayName}
-      </label>
-    ));
+    // Sorting this because iOS Safari reorders the list based on recently updated
+    return Object.values<Option>(state.options)
+      .sort((a: Option, b: Option) => (a.displayName > b.displayName ? 1 : -1))
+      .map((value: Option) => (
+        <label key={value.displayName} className="sc-dice-option">
+          <input
+            type="checkbox"
+            defaultChecked={value.active}
+            onChange={() => handleOptionChange(value.displayName)}
+          />
+          {value.displayName}
+        </label>
+      ));
   };
 
   const showOptions = () => {
@@ -293,6 +320,17 @@ const Dice = () => {
         </div>
         <div className="sc-dice__buttons" onClick={hideOptions}>
           {renderButtons()}
+          <button
+            className="sc-dice-button"
+            onClick={e => {
+              e.preventDefault();
+              dispatch({
+                type: "clear"
+              });
+            }}
+          >
+            Clear
+          </button>
         </div>
       </div>
     </>
