@@ -296,7 +296,7 @@ const Dice = () => {
         {state.optionsView && (
           <div className="sc-dice__options-flyout">
             <span className="sc-dice__options-callout" onClick={hideOptions}>
-              &#11013; Close Options
+              &larr; Close Options
             </span>
             {renderOptions()}
             <button
@@ -341,7 +341,7 @@ const Dice = () => {
         )}
         <div className="sc-dice__display" onClick={hideOptions}>
           <span className="sc-dice__options-callout" onClick={showOptions}>
-            Options &#10132;
+            Options &rarr;
           </span>
           <div className="sc-dice__history">{renderHistory()}</div>
           <div className="sc-dice__current">

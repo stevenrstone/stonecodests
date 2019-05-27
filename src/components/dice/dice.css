@@ -23,7 +23,7 @@
   bottom: 0;
   box-shadow: rgba(0, 0, 0, 0.4) 5px 5px 15px;
   left: 0;
-  /* height: calc(100vh - 2rem); */
+  padding-top: 0.5rem;
   position: absolute;
   top: 0;
   width: 75vw;
