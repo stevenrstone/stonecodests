@@ -300,7 +300,7 @@ const Dice = () => {
             </span>
             {renderOptions()}
             <button
-              className="sc-dice-button"
+              className="sc-dice__options-button"
               type="button"
               onClick={() => {
                 dispatch({

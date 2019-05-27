@@ -35,6 +35,13 @@
   text-decoration: underline;
 }
 
+.sc-dice__options-button {
+  margin-left: 0.75rem;
+  margin-top: 1rem;
+  padding: 0.5rem;
+  width: 50%;
+}
+
 .sc-dice__history {
   display: flex;
   flex-direction: column;
@@ -105,14 +112,14 @@
 }
 
 .sc-dice__buttons {
-  /* align-items: flex-start; */
+  align-items: flex-start;
   border-top: 1px solid black;
   bottom: 0;
-  /* display: flex; */
-  /* flex-direction: row; */
-  /* flex-wrap: wrap; */
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
   height: 30%;
-  /* justify-content: space-around; */
+  justify-content: space-around;
   position: absolute;
   text-align: center;
   width: 100%;
@@ -121,6 +128,8 @@
 
 .sc-dice-button {
   /* flex-basis: 21%; */
+  border-radius: 1rem;
+  border: none;
   display: block;
   float: left;
   height: 40%;
