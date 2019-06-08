@@ -154,3 +154,26 @@
   color: gray;
   opacity: 0.6;
 }
+
+.options-transition-enter {
+  display: block;
+  left: -100%;
+  position: absolute;
+  transition: left 0.3s;
+}
+
+.options-transition-enter-active {
+  left: 0;
+  transition: left 0.3s;
+}
+
+.options-transition-exit {
+  left: 0;
+  position: absolute;
+  transition: left 0.3s;
+}
+
+.options-transition-exit-active {
+  left: -100%;
+  transition: left 0.3s;
+}

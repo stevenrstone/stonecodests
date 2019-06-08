@@ -1,4 +1,5 @@
 import React, { useEffect, useReducer } from "react";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 import "../../components/dice/dice.css";
 
@@ -293,7 +294,13 @@ const Dice = () => {
   return (
     <>
       <div className="sc-dice-container">
-        {state.optionsView && (
+        <CSSTransition
+          classNames="options-transition"
+          key="options"
+          timeout={{ enter: 300, exit: 300 }}
+          in={state.optionsView}
+          unmountOnExit
+        >
           <div className="sc-dice__options-flyout">
             <span className="sc-dice__options-callout" onClick={hideOptions}>
               &larr; Close Options
@@ -338,7 +345,7 @@ const Dice = () => {
               Roll Stats
             </button>
           </div>
-        )}
+        </CSSTransition>
         <div className="sc-dice__display" onClick={hideOptions}>
           <span className="sc-dice__options-callout" onClick={showOptions}>
             Options &rarr;
